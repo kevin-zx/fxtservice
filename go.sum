@@ -13,6 +13,12 @@ github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD
 github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
 github.com/jinzhu/now v1.0.1 h1:HjfetcXq097iXP0uoPCdnM4Efp5/9MsM0/M+XOTeR3M=
 github.com/jinzhu/now v1.0.1/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=
+github.com/kevin-zx/sqlbase v0.0.1 h1:9sYhG19+yGcqv/blx/mdZEzBlvTPMXbxIBTwzZKetiQ=
+github.com/kevin-zx/sqlbase v0.0.1/go.mod h1:ZUp73sld0kDrwNrQo7yFRAblqSdJg2XzKcKWVurc4nY=
+github.com/kevin-zx/sqlbase v0.0.2 h1:FMJRNZCJxQuhKSAbXSSDBpAQkuVRmLI/PGaq/icTby0=
+github.com/kevin-zx/sqlbase v0.0.2/go.mod h1:ZUp73sld0kDrwNrQo7yFRAblqSdJg2XzKcKWVurc4nY=
+github.com/kevin-zx/sqlbase v0.0.3 h1:iAlbRoZFZ6nlz3n+NnpdKfrx8+zu3UEsfLSvuaOtdt4=
+github.com/kevin-zx/sqlbase v0.0.3/go.mod h1:ZUp73sld0kDrwNrQo7yFRAblqSdJg2XzKcKWVurc4nY=
 github.com/lib/pq v1.1.1 h1:sJZmqHoEaY7f+NPP8pgLB/WxulyR3fewgCM2qaSlBb4=
 github.com/lib/pq v1.1.1/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/mattn/go-sqlite3 v2.0.1+incompatible h1:xQ15muvnzGBHpIpdrNi1DA5x0+TcBZzsIDwmw9uTHzw=
