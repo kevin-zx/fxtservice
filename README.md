@@ -44,3 +44,6 @@ Run `make push` to push the container image to `REGISTRY`.  Run `make all-push`
 to push the container images for all architectures.
 
 Run `make clean` to clean up.
+
+
+protoc -I pkg/rpc/fxtservice_rpc/ pkg/rpc/fxtservice_rpc/fxtservice.proto --go_out=plugins=grpc:pkg/rpc/fxtservice_rpc

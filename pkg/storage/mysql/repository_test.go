@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"fxtservice/pkg/config"
+	"github.com/kevin-zx/fxtservice/pkg/config"
 	"github.com/kevin-zx/sqlbase"
 	"reflect"
 	"testing"

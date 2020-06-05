@@ -17,10 +17,33 @@ limitations under the License.
 package main
 
 import (
+	"github.com/kevin-zx/fxtservice/pkg/config"
+	"github.com/kevin-zx/fxtservice/pkg/rpc/fxtservice_rpc"
+	"github.com/kevin-zx/fxtservice/pkg/storage/mysql"
+	"google.golang.org/grpc"
 	"log"
+	"net"
 )
 
 func main() {
-
-	log.Printf("hello, world!")
+	lis, err := net.Listen("tcp", "0.0.0.0:11844")
+	if err != nil {
+		log.Fatal(err)
+	}
+	//s, err := sqlbase.NewStorage(config.XwDB["ENGINE"].(string), config.XwDB["PORT"].(int), config.XwDB["NAME"].(string), config.XwDB["USER"].(string), config.XwDB["HOST"].(string), config.XwDB["PASSWORD"].(string))
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer s.Close()
+	fs, err := mysql.NewFxtStorage(config.XwDB["ENGINE"].(string), config.XwDB["PORT"].(int), config.XwDB["NAME"].(string), config.XwDB["USER"].(string), config.XwDB["HOST"].(string), config.XwDB["PASSWORD"].(string))
+	if err != nil {
+		panic(err)
+	}
+	defer fs.Close()
+	grpcServer := grpc.NewServer()
+	fxtservice_rpc.RegisterFxtServiceServer(grpcServer, fxtservice_rpc.NewFxtRPCService(fs))
+	err = grpcServer.Serve(lis)
+	if err != nil {
+		log.Fatalf("failed to start server:%v", err)
+	}
 }

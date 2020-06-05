@@ -18,7 +18,6 @@ type Project struct {
 
 type GuanwangProject struct {
 	Project
-
 	SiteKeywords []*SiteKeyword `json:"site_keywords"`
 }
 
@@ -38,7 +37,7 @@ type SiteKeyword struct {
 	JingzhunStatus   int                `json:"jingzhun_status"` // 1 开启精准  2 删除精准
 	ExecutionTime    *time.Time         `json:"execution_time"`
 	SpecialReason    string             `json:"special_reason"`
-	SiteKeywordRanks []*SiteKeywordRank `json:"site_keyword_rank"`
+	SiteKeywordRanks []*SiteKeywordRank `json:"site_keyword_ranks"`
 }
 
 type SiteKeywordRank struct {

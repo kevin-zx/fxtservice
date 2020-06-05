@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package fxtservice_rpc;
+
+message User {
+    uint32 id = 1;
+    string user_name = 2;
+    string agent_business = 3;
+    bool guanwang = 4;
+    bool guanbao = 5;
+    bool cibao = 6;
+}
+
+message Site {
+    uint32 id = 1;
+    uint32 user_id = 2;
+    string site_name = 3;
+    string site_url = 4;
+    int32 site_type = 5;
+}
+
+message SiteKeyword {
+    uint32 id = 1;
+    uint32 site_id = 2;
+    string keyword_name = 3;
+    string platform = 4;
+    int32 jingzhun_status = 5;
+    int64 execution_time = 6;
+    string special_reason = 7;
+    repeated SiteKeywordRank site_keyword_ranks = 8;
+}
+
+message SiteKeywordRank {
+    uint32 site_keyword_id = 1;
+    int32 rank = 2;
+    int64 date = 3;
+}
+
+message GuanwangProject {
+    User user = 1;
+    Site site = 2;
+    repeated SiteKeyword site_keywords = 3;
+}
+
+message GuanbaoWord {
+    uint32 id = 1;
+    uint32 package_id = 2;
+    string name = 3;
+    repeated GuanbaoWordRank guanbao_word_ranks = 4;
+}
+
+message GuanbaoWordRank {
+    uint32 id = 1;
+    uint32 word_id = 2;
+    int64 date = 3;
+    int32 rank = 4;
+    string engine = 5;
+}
+
+message GuanbaoProject {
+    User user = 1;
+    Site site = 2;
+    uint32 package_id = 3;
+    int32 status = 4;
+    int64 optimize_confirmed_at = 5;
+    repeated GuanbaoWord guanbao_words = 6;
+}
+
+//GetGuanbaoProjectBySiteURLAndClientName(siteURL string, clientName string) ([]*GuanbaoProject, error)
+//GetGuanwangProjectByURL(siteURL string, clientName string) ([]*GuanwangProject, error)
+
+message ProjectRequest {
+    string site_url = 1;
+    string client_name = 2;
+}
+message GuanbaoProjectResponse {
+    repeated GuanbaoProject guanbao_projects = 1;
+}
+
+message GuanwangProjectResponse {
+    repeated GuanwangProject guanwang_projects = 1;
+}
+
+service FxtService {
+    rpc GetGuanbaoProject (ProjectRequest) returns (GuanbaoProjectResponse) {
+    }
+    rpc GetGuanwangProject (ProjectRequest) returns (GuanwangProjectResponse) {
+    }
+}

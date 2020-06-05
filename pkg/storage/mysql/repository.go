@@ -162,6 +162,8 @@ func (f *fxtStorage) GetGuanbaoProjectBySiteURLAndClientName(siteURL string, cli
 			if err != nil {
 				return nil, err
 			}
+			gp.User = u
+			gp.Site = site
 			gp.GuanbaoWords, err = f.GetGuanbaoWordByPackageID(gp.PackageID)
 			if err != nil {
 				return nil, err
@@ -344,7 +346,7 @@ var siteKeywordBaseSql = `SELECT
 	sk.site_id,
 	sk.keyword_name,
 	sk.keyword_platform,
-	xp.status AS jingzhun_status,
+	COALESCE(xp.status,0) AS jingzhun_status,
 	sk.execution_time,
 	COALESCE(tsne.content,'') as special_reason
 FROM
@@ -400,7 +402,7 @@ func (f *fxtStorage) GetSiteKeywordRankByKeywordIDsAndRecent(skIDs []uint, recen
 }
 
 func (f *fxtStorage) rawScan(baseSql string, limitPart string, scan func(rows *sql.Rows) error, values ...interface{}) error {
-	rows, err := f.s.DB.Debug().Raw(baseSql+limitPart, values...).Rows()
+	rows, err := f.s.DB.Raw(baseSql+limitPart, values...).Rows()
 	if err != nil {
 		return err
 	}
