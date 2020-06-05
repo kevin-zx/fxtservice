@@ -42,6 +42,7 @@ func convertSite2RPC(site *mysql.Site) *Site {
 		UserId:   uint32(site.UserID),
 		SiteName: site.SiteName,
 		SiteUrl:  site.SiteURL,
+		SpecialReason: site.SpecialReason,
 		SiteType: int32(site.SiteType),
 	}
 }
@@ -136,7 +137,6 @@ func convertGuanwangSiteKeyword2RPC(keyword *mysql.SiteKeyword) *SiteKeyword {
 		Platform:         keyword.Platform,
 		JingzhunStatus:   int32(keyword.JingzhunStatus),
 		ExecutionTime:    et,
-		SpecialReason:    keyword.SpecialReason,
 		SiteKeywordRanks: skrs,
 	}
 }

@@ -16,7 +16,9 @@ message Site {
     uint32 user_id = 2;
     string site_name = 3;
     string site_url = 4;
+
     int32 site_type = 5;
+    string special_reason = 6;
 }
 
 message SiteKeyword {
@@ -26,8 +28,8 @@ message SiteKeyword {
     string platform = 4;
     int32 jingzhun_status = 5;
     int64 execution_time = 6;
-    string special_reason = 7;
-    repeated SiteKeywordRank site_keyword_ranks = 8;
+
+    repeated SiteKeywordRank site_keyword_ranks = 7;
 }
 
 message SiteKeywordRank {

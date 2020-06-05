@@ -31,11 +31,6 @@ func (f *fxtStorage) Close() {
 	f.s.Close()
 }
 
-func (f *fxtStorage) GetBaseProjectByClientNameOrURL(clientName string, siteURL string) ([]*Project, error) {
-	f.s.DB.Raw("")
-	return nil, nil
-}
-
 const userInfoBaseSql = `SELECT
 	u.id id,
 	u.username user_name,
@@ -122,14 +117,13 @@ func (f *fxtStorage) GetSitesBySiteURL(siteURL string) ([]*Site, error) {
 	return ss, nil
 }
 
-var siteBaseSql = "SELECT id,name as site_name,site_url,site_type,user_id FROM sites s WHERE deleted_at is null"
-
+var siteBaseSql = "SELECT s.id,s.name as site_name,s.site_url,s.site_type,s.user_id,COALESCE(tsne.content,'') as special_reason FROM sites s left join tag_site_not_examine tsne on tsne.site_id = s.id WHERE deleted_at is null"
 func (f *fxtStorage) GetSites(limitPart string, values ...interface{}) ([]*Site, error) {
 	var sites []*Site
 	var err error
 	err = f.rawScan(siteBaseSql, limitPart, func(rows *sql.Rows) error {
 		s := Site{}
-		err := rows.Scan(&s.ID, &s.SiteName, &s.SiteURL, &s.SiteType, &s.UserID)
+		err := rows.Scan(&s.ID, &s.SiteName, &s.SiteURL, &s.SiteType, &s.UserID, &s.SpecialReason)
 		if err != nil {
 			return err
 		}
@@ -347,13 +341,12 @@ var siteKeywordBaseSql = `SELECT
 	sk.keyword_name,
 	sk.keyword_platform,
 	COALESCE(xp.status,0) AS jingzhun_status,
-	sk.execution_time,
-	COALESCE(tsne.content,'') as special_reason
+	sk.execution_time
 FROM
 	site_keywords sk
 left join sites s on s.id = sk.site_id 
 left join jingzhun_wrapper.xiaowei_paimings xp on xp.domain = s.site_url AND xp.product = "guanwang" AND xp.word = sk.keyword_name AND xp.engine = sk.keyword_platform
-left join tag_site_not_examine tsne on tsne.site_id = sk.site_id
+
 where
 	sk.deleted_at IS NULL 
 `
@@ -363,7 +356,7 @@ func (f *fxtStorage) GetSiteKeyword(limitPart string, values ...interface{}) ([]
 	var err error
 	err = f.rawScan(siteKeywordBaseSql, limitPart, func(rows *sql.Rows) error {
 		sk := SiteKeyword{}
-		err := rows.Scan(&sk.ID, &sk.SiteID, &sk.KeywordName, &sk.Platform, &sk.JingzhunStatus, &sk.ExecutionTime, &sk.SpecialReason)
+		err := rows.Scan(&sk.ID, &sk.SiteID, &sk.KeywordName, &sk.Platform, &sk.JingzhunStatus, &sk.ExecutionTime)
 		if err != nil {
 			return err
 		}

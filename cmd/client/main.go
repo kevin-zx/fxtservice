@@ -7,25 +7,37 @@ import (
 	"github.com/kevin-zx/fxtservice/pkg/rpc/fxtservice_rpc"
 	"google.golang.org/grpc"
 	"log"
+	"time"
 )
 
 func main() {
-	conn, err := grpc.Dial("127.0.0.1:11844", grpc.WithInsecure())
+	//conn, err := grpc.Dial("127.0.0.1:11844", grpc.WithInsecure())
+	conn, err := grpc.Dial("45.40.251.69:11844", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+	defer conn.Close()
 	c := fxtservice_rpc.NewFxtServiceClient(conn)
-	//getGuanbaoProject(c)
+
+	getGuanbaoProject(c)
 	getGuanwangProject(c)
 }
 
 func getGuanwangProject(c fxtservice_rpc.FxtServiceClient) {
 	d, err := c.GetGuanwangProject(context.Background(), &fxtservice_rpc.ProjectRequest{
-		SiteUrl:    "www.surpon.com",
-		ClientName: "苏州迅鹏仪器仪表有限公司",
+		SiteUrl:    "www.pigv5.cn",
+		ClientName: "武汉数心百应",
 	})
 	if err != nil {
 		log.Fatalf("getguanbaoproject err :%v", err)
+	}
+	for _, project := range d.GuanwangProjects {
+		for _, keyword := range project.SiteKeywords {
+			for _, rank := range keyword.SiteKeywordRanks {
+
+				fmt.Println(time.Unix(rank.Date,0).Format("2006-01-02"))
+			}
+		}
 	}
 	data, err := json.Marshal(d)
 	if err != nil {
@@ -36,8 +48,8 @@ func getGuanwangProject(c fxtservice_rpc.FxtServiceClient) {
 
 func getGuanbaoProject(c fxtservice_rpc.FxtServiceClient) {
 	d, err := c.GetGuanbaoProject(context.Background(), &fxtservice_rpc.ProjectRequest{
-		SiteUrl:    "www.njhdbfc.com",
-		ClientName: "南京市江宁区博文活动板房厂",
+		SiteUrl:    "www.pigv5.cn",
+		ClientName: "武汉数心百应",
 	})
 	if err != nil {
 		log.Fatalf("getguanbaoproject err :%v", err)

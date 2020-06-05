@@ -22,11 +22,12 @@ type GuanwangProject struct {
 }
 
 type Site struct {
-	ID       uint   `json:"id"`
-	UserID   uint   `json:"user_id"`
-	SiteName string `json:"site_name"`
-	SiteURL  string `json:"site_url"`
-	SiteType int    `json:"site_type"`
+	ID            uint   `json:"id"`
+	UserID        uint   `json:"user_id"`
+	SiteName      string `json:"site_name"`
+	SiteURL       string `json:"site_url"`
+	SiteType      int    `json:"site_type"`
+	SpecialReason string `json:"special_reason"`
 }
 
 type SiteKeyword struct {
@@ -36,7 +37,6 @@ type SiteKeyword struct {
 	Platform         string             `json:"platform"`
 	JingzhunStatus   int                `json:"jingzhun_status"` // 1 开启精准  2 删除精准
 	ExecutionTime    *time.Time         `json:"execution_time"`
-	SpecialReason    string             `json:"special_reason"`
 	SiteKeywordRanks []*SiteKeywordRank `json:"site_keyword_ranks"`
 }
 
