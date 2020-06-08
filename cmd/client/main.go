@@ -11,8 +11,8 @@ import (
 )
 
 func main() {
-	//conn, err := grpc.Dial("127.0.0.1:11844", grpc.WithInsecure())
-	conn, err := grpc.Dial("45.40.251.69:11844", grpc.WithInsecure())
+	conn, err := grpc.Dial("127.0.0.1:11844", grpc.WithInsecure())
+	//conn, err := grpc.Dial("45.40.251.69:11844", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -25,8 +25,8 @@ func main() {
 
 func getGuanwangProject(c fxtservice_rpc.FxtServiceClient) {
 	d, err := c.GetGuanwangProject(context.Background(), &fxtservice_rpc.ProjectRequest{
-		SiteUrl:    "www.pigv5.cn",
-		ClientName: "武汉数心百应",
+		SiteUrl:    "www.1618.tech",
+		ClientName: "苏州易尔邦自动化设备",
 	})
 	if err != nil {
 		log.Fatalf("getguanbaoproject err :%v", err)
@@ -48,8 +48,8 @@ func getGuanwangProject(c fxtservice_rpc.FxtServiceClient) {
 
 func getGuanbaoProject(c fxtservice_rpc.FxtServiceClient) {
 	d, err := c.GetGuanbaoProject(context.Background(), &fxtservice_rpc.ProjectRequest{
-		SiteUrl:    "www.pigv5.cn",
-		ClientName: "武汉数心百应",
+		SiteUrl:    "www.1618.tech",
+		ClientName: "苏州易尔邦自动化设备",
 	})
 	if err != nil {
 		log.Fatalf("getguanbaoproject err :%v", err)

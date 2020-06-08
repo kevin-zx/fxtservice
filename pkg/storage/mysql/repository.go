@@ -53,9 +53,15 @@ WHERE
 `
 
 func (f *fxtStorage) GetUserByName(name string) (*User, error) {
-	us, err := f.GetUser(` AND u.username LIKE ? LIMIT 1`, "%"+name+"%")
+	us, err := f.GetUser(` AND u.username = ? LIMIT 1`, name)
 	if err != nil {
 		return nil, err
+	}
+	if len(us) == 0 {
+		us, err = f.GetUser(` AND u.username LIKE ? LIMIT 1`, "%"+name+"%")
+		if err != nil {
+			return nil, err
+		}
 	}
 	if len(us) == 0 {
 		return nil, fmt.Errorf("can't find specify user,name: %s", name)
@@ -107,9 +113,15 @@ func (f *fxtStorage) GetSitesByUserID(userID uint) ([]*Site, error) {
 }
 
 func (f *fxtStorage) GetSitesBySiteURL(siteURL string) ([]*Site, error) {
-	ss, err := f.GetSites(" AND site_url like ?", "%"+siteURL+"%")
+	ss, err := f.GetSites(" AND site_url = ?", siteURL)
 	if err != nil {
 		return nil, err
+	}
+	if len(ss) ==0 {
+		ss, err = f.GetSites(" AND site_url like ?", "%"+siteURL+"%")
+		if err != nil {
+			return nil, err
+		}
 	}
 	if len(ss) == 0 {
 		return nil, fmt.Errorf("can't find site by site_url:%s", siteURL)
@@ -395,7 +407,7 @@ func (f *fxtStorage) GetSiteKeywordRankByKeywordIDsAndRecent(skIDs []uint, recen
 }
 
 func (f *fxtStorage) rawScan(baseSql string, limitPart string, scan func(rows *sql.Rows) error, values ...interface{}) error {
-	rows, err := f.s.DB.Raw(baseSql+limitPart, values...).Rows()
+	rows, err := f.s.DB.Debug().Raw(baseSql+limitPart, values...).Rows()
 	if err != nil {
 		return err
 	}
