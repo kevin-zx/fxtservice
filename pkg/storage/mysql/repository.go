@@ -407,7 +407,7 @@ func (f *fxtStorage) GetSiteKeywordRankByKeywordIDsAndRecent(skIDs []uint, recen
 }
 
 func (f *fxtStorage) rawScan(baseSql string, limitPart string, scan func(rows *sql.Rows) error, values ...interface{}) error {
-	rows, err := f.s.DB.Debug().Raw(baseSql+limitPart, values...).Rows()
+	rows, err := f.s.DB.Raw(baseSql+limitPart, values...).Rows()
 	if err != nil {
 		return err
 	}
