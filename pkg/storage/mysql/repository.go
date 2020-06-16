@@ -117,7 +117,7 @@ func (f *fxtStorage) GetSitesBySiteURL(siteURL string) ([]*Site, error) {
 	if err != nil {
 		return nil, err
 	}
-	if len(ss) ==0 {
+	if len(ss) == 0 {
 		ss, err = f.GetSites(" AND site_url like ?", "%"+siteURL+"%")
 		if err != nil {
 			return nil, err
@@ -130,6 +130,7 @@ func (f *fxtStorage) GetSitesBySiteURL(siteURL string) ([]*Site, error) {
 }
 
 var siteBaseSql = "SELECT s.id,s.name as site_name,s.site_url,s.site_type,s.user_id,COALESCE(tsne.content,'') as special_reason FROM sites s left join tag_site_not_examine tsne on tsne.site_id = s.id WHERE deleted_at is null"
+
 func (f *fxtStorage) GetSites(limitPart string, values ...interface{}) ([]*Site, error) {
 	var sites []*Site
 	var err error
@@ -323,7 +324,7 @@ func (f *fxtStorage) loadSiteKeywordsRank(sks []*SiteKeyword, recentDays int) er
 	var skids []uint
 	for _, sk := range sks {
 		//if sk.SiteKeywordRanks == nil {
-		//	
+		//
 		//}
 		skids = append(skids, sk.ID)
 		sksMap[sk.ID] = sk
@@ -360,7 +361,7 @@ left join sites s on s.id = sk.site_id
 left join jingzhun_wrapper.xiaowei_paimings xp on xp.domain = s.site_url AND xp.product = "guanwang" AND xp.word = sk.keyword_name AND xp.engine = sk.keyword_platform
 
 where
-	sk.deleted_at IS NULL 
+	sk.deleted_at IS NULL AND sk.status = 1 
 `
 
 func (f *fxtStorage) GetSiteKeyword(limitPart string, values ...interface{}) ([]*SiteKeyword, error) {
