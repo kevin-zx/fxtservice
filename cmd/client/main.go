@@ -19,8 +19,8 @@ func main() {
 	defer conn.Close()
 	c := fxtservice_rpc.NewFxtServiceClient(conn)
 
-	//getGuanbaoProject(c)
-	getGuanwangProject(c)
+	getGuanbaoProject(c)
+	//getGuanwangProject(c)
 }
 
 func getGuanwangProject(c fxtservice_rpc.FxtServiceClient) {
@@ -48,8 +48,8 @@ func getGuanwangProject(c fxtservice_rpc.FxtServiceClient) {
 
 func getGuanbaoProject(c fxtservice_rpc.FxtServiceClient) {
 	d, err := c.GetGuanbaoProject(context.Background(), &fxtservice_rpc.ProjectRequest{
-		SiteUrl:    "www.cqxsl.com",
-		ClientName: "重庆新思路装饰设计工程有限公司",
+		SiteUrl:    "www.ahbjjd.cn",
+		ClientName: "安徽步坚机电有限公司",
 	})
 	if err != nil {
 		log.Fatalf("getguanbaoproject err :%v", err)

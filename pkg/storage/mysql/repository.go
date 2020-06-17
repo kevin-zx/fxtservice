@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/kevin-zx/sqlbase"
+	"strings"
 )
 
 type FxtStorage interface {
@@ -176,7 +177,7 @@ func (f *fxtStorage) GetGuanbaoProjectBySiteURLAndClientName(siteURL string, cli
 				return nil, err
 			}
 			err = f.loadGuanbaoWordRanks(gp.GuanbaoWords, 2)
-			if err != nil {
+			if err != nil && !strings.Contains(err.Error(), "not found") {
 				return nil, err
 			}
 			projects = append(projects, gp)
